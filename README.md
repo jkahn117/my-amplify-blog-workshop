@@ -332,7 +332,7 @@ export default {
 
 After saving your changes, visit the newly updated site in the browser at http://localhost:8080. The page should reload automatically, but you can also refresh manually if not. The page should now be retrieving data from AWS AppSync:
 
-![]()
+![After integrating GraphQL API](./images/with_api.png)
 
 Let's also update the Post Detail page to retrieve data from the GraphQL API. In a more complex application, we may use state (Vuex in the Vue world) to store some of this data locally, so that we do not need to make a server request. Here, we will reach out to the server again.
 
