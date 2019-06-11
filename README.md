@@ -211,6 +211,43 @@ Now that we have some data, let's query for a list of posts and the first post i
 query ListPost {
   listPosts {
     items {
+      id
+      title
+    }
+  }
+}
+```
+
+Your result should look something like this:
+
+``` json
+{
+  "data": {
+    "listPosts": {
+      "items": [
+        {
+          "title": "My First GraphQL Post",
+          "comments": {
+            "items": [
+              {
+                "id": "34477d37-eecc-4727-9304-16c0d19101e8",
+                "content": "First Comment"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+We can also modify the GraphQL query to only return desired data, for example, if we wanted to retrieve the first comment for this post:
+
+``` graphql
+query ListPost {
+  listPosts {
+    items {
       title
       comments(limit: 1) {
         items {
@@ -222,7 +259,7 @@ query ListPost {
 }
 ```
 
-Your result should look something like this:
+The result would look like this:
 
 ``` json
 {
@@ -396,71 +433,8 @@ export default {
 </script>
 ```
 
+Save your changes and return to the browser. Click on the "Continue Reading" button beneath one of the posts. You should now see a page showing only the post you selected with any comments just beneath the text.
 
+Now that we have explored GraphQL queries, let's take a look at creating data using GraphQL mutations.
 
-
-## Adding Authentication
-
-To add authentication, we can use the following command:
-
-```sh
-amplify add auth
-```
-- Do you want to use default authentication and security configuration?  __Default configuration__
-- How do you want users to be able to sign in when using your Cognito User Pool? __Username__
-- What attributes are required for signing up? __Email__ (keep default)
-
-Now, we'll run the push command and the cloud resources will be created in our AWS account.
-
-```bash
-amplify push
-```
-
-### Configuring the React applicaion
-
-Now, our resources are created & we can start using them!
-
-The first thing we need to do is to configure our React application to be aware of our new AWS Amplify project. We can do this by referencing the auto-generated `aws-exports.js` file that is now in our src folder.
-
-To configure the app, open __src/index.js__ and add the following code below the last import:
-
-```js
-import Amplify from 'aws-amplify'
-import config from './aws-exports'
-Amplify.configure(config)
-```
-
-Now, our app is ready to start using our AWS services.
-
-### Using the withAuthenticator component
-
-To add authentication, we'll go into __src/App.js__ and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
-
-### src/App.js
-
-```js
-import { withAuthenticator } from 'aws-amplify-react'
-```
-
-Next, we'll wrap our default export (the App component) with the `withAuthenticator` HOC:
-
-```js
-export default withAuthenticator(App, { includeGreetings: true })
-```
-
-```sh
-# run the app
-
-npm start
-```
-
-Now, we can run the app and see that an Authentication flow has been added in front of our App component. This flow gives users the ability to sign up & sign in.
-
-
-
-
-To view the service you can run the `console` command the feature you'd like to view:
-
-```sh
-amplify console auth
-```
+**[Mutating Data >>](./1_)**
