@@ -11,8 +11,13 @@ To get started, we'll clone this repository, which includes a simple but functio
 ``` bash
 $ git clone https://github.com/jkahn117/my-amplify-blog-workshop
 
-# Change to the starter directory
-$ cd my-amplify-blog-workshop/starter
+# You can either modify the starter project or create a copy.
+# I suggest making a copy of starter before starting work as shown here...
+$ cd my-amplify-blog-workshop
+
+$ cp -r starter mywork
+
+$ cd mywork
 
 # Use NPM to install dependencies
 $ npm install
@@ -293,8 +298,6 @@ With our GraphQL API in place, let's integrate AWS Amplify and AWS AppSync to ma
 Install the AWS Amplify & AWS Amplify Vue libraries ([docs](https://aws-amplify.github.io/docs/js/vue)):
 
 ```bash
-$ cd my-amplify-blog
-
 $ npm install --save aws-amplify aws-amplify-vue
 ```
 
@@ -437,4 +440,4 @@ Save your changes and return to the browser. Click on the "Continue Reading" but
 
 Now that we have explored GraphQL queries, let's take a look at creating data using GraphQL mutations.
 
-**[Mutating Data >>](./1_)**
+**[Mutating Data >>](./1_Mutations)**
