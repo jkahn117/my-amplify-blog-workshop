@@ -55,7 +55,7 @@ export default {
 
 <style>
 .newComment {
-  padding-top: 30px;
+  padding-top: "30px";
 }
 </style>
 ```
@@ -177,3 +177,91 @@ Now that you know where to find the various resolvers for your GraphQL API, revi
 
 ## Subscribing to Changes in Data
 
+AWS AppSync powers real-time use cases that provide rich, engaging user experiences by delivering quick access to data as it is available or changes. Use cases range from real-time scoreboards to messaging applications to collaborative writing. AppSync allows us to deliver these real-time experiences at scale, to millions of clients.
+
+AppSync supports subscriptions against any data source, such that when a mutation occurs, the results can be passed to subscribed clients using MQTT over Websockets.
+
+To demonstrate AppSync subscriptions, we will enhance the Home page of our blog application to automatically display the latest posts as they are published. In addition to updating `Home.vue`, we will use the AWS Management Console to create a new post, which will trigger AppSync to send the new post data to subscribed clients.
+
+> In this example, we will use a Vue component provided by Amplify called `Connect` that will query and subscribe to changes in the data. This declarative approach provides the same functionality as JavaScript code but can be easier to understand in simple cases.
+
+Overwrite the existing content of `src/views/Home/vue` with the code below. Save your updates and refresh the page in the browser.
+
+### src/views/Home.vue
+
+``` js
+<template>
+  <div class="home">
+    <amplify-connect :query="listPostsQuery"
+        :subscription="onCreatePostSubscription"
+        :onSubscriptionMsg="onCreatePost">
+      <template slot-scope="{ loading, data, errors }">
+        <div v-if="loading"></div>
+        <div v-else-if="errors.length > 0">An error occurred</div>
+        <div v-else-if="data">
+          <Post v-for="post in data.listPosts.items" :post="post" :key="post.id" :isSummary="true" />
+        </div>
+      </template>
+    </amplify-connect>
+  </div>
+</template>
+
+<script>
+import Post from '@/components/Post.vue'
+
+import { graphqlOperation } from 'aws-amplify'
+import { listPosts } from '@/graphql/queries'
+import { onCreatePost } from '@/graphql/subscriptions'
+
+export default {
+  name: 'home',
+  components: {
+    Post
+  },
+  computed: {
+    listPostsQuery() {
+      return graphqlOperation(listPosts)
+    },
+    onCreatePostSubscription() {
+      return graphqlOperation(onCreatePost)
+    }
+  },
+  methods: {
+    // How to deal with new subscription data
+    onCreatePost(prevData, newData) {
+      const newPost = newData.onCreatePost
+      prevData.data.listPosts.items.push(newPost)
+      return prevData.data
+    }
+  }
+}
+</script>
+```
+
+Open the AWS AppSync console and click on the Queries menu item on the left.
+
+> If you have already closed the Management Console, use the command `amplify console api`.
+
+Create a new blog post using the following GraphQL mutation and click the orange run button. Hop back to the browser and look for the new post to appear.
+
+``` graphql
+mutation CreatePost {
+  createPost(input: {
+    title: "New Post - Subscription",
+    content: [
+      "This post should automatically appear on the home page using AppSync Subscriptions.",
+    ]
+  })
+  {
+    id
+    title
+    content
+  }
+}
+```
+
+While arguably an unneccessary example for a blog, real-time updates can open exciting possibilities for new and existing applications. AppSync makes adding real-time data easy to implement at scale.
+
+While we've been working with our GraphQL API, you may have noticed that neither the application nor the API currently implement any type of auhorization. Any user with the API Key could create a new post. Next, we'll add authorization to the API to protect mutations that modify data.
+
+**[Adding Authorization >>](./2_Auth)**

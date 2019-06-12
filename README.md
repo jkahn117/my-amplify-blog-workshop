@@ -295,6 +295,8 @@ With our GraphQL API in place, let's integrate AWS Amplify and AWS AppSync to ma
 
 > Be sure to press `CTRL+C` to stop the Vue server before moving on.
 
+> Confirm you are working in either the `mywork` or `starter` directory.
+
 Install the AWS Amplify & AWS Amplify Vue libraries ([docs](https://aws-amplify.github.io/docs/js/vue)):
 
 ```bash
