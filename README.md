@@ -70,7 +70,7 @@ $ amplify init
 - Enter a name for the environment: __dev__
 - Choose your default editor: __Visual Studio Code (or your default editor)__   
 - Please choose the type of app that you're building __javascript__   
-- What javascript framework are you using __react__   
+- What javascript framework are you using __vue__   
 - Source Directory Path: __src__   
 - Distribution Directory Path: __build__   
 - Build Command: __npm run-script build__   
@@ -231,15 +231,8 @@ Your result should look something like this:
     "listPosts": {
       "items": [
         {
+          "id": "34477d37-eecc-4727-9304-16c0d19101e8",
           "title": "My First GraphQL Post",
-          "comments": {
-            "items": [
-              {
-                "id": "34477d37-eecc-4727-9304-16c0d19101e8",
-                "content": "First Comment"
-              }
-            ]
-          }
         }
       ]
     }
@@ -289,7 +282,7 @@ The result would look like this:
 
 > Curious about the underpinnings of this example? Check out the CloudFormation and DynamoDB consoles in your account. Amplify uses CloudFormation to manage your AWS resources and this example uses several DynamoDB tables to store data.
 
-### Configuring the React applicaion
+### Configuring the Vue applicaion
 
 With our GraphQL API in place, let's integrate AWS Amplify and AWS AppSync to make the application dynamic.
 
