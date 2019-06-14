@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <Post :post="post" :key="post.id" />
+    <Post :post="myPost" :key="myPost.id" />
     
     <hr />
 
@@ -25,12 +25,13 @@ export default {
   },
   data: function() {
     return {
+      myPost: {},
       comments: []
     }
   },
   mounted() {
-    this.post = data.posts.find((el) => el.id === this.$route.params.id)
-    this.comments = Array.isArray(this.post.comments) || this.post.comments.length ? this.post.comments : []
+    this.myPost = data.posts.find((el) => el.id === this.$route.params.id)
+    this.comments = Array.isArray(this.myPost.comments) && this.myPost.comments.length ? this.myPost.comments : []
   }
 }
 </script>

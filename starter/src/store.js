@@ -20,6 +20,12 @@ export default new Vuex.Store({
   getters: {
     getUser: (state) => {
       return state.user
+    },
+    getUsername: (state) => {
+      return state.user ? state.user.getUsername() : ''
+    },
+    isLoggedIn: (state) => {
+      return !!state.user
     }
   }
 })

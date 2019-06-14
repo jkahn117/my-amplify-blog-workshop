@@ -35,10 +35,21 @@
     <div class="hero-foot footer-custom">
       <div class="container has-text-centered">
         <hr/>
-        <a class="nav-item" href="http://github.com/jkahn117">
+        <a class="nav-item" href="https://github.com/jkahn117/my-amplify-blog-workshop">
           <b-icon pack="fab" icon="github" size="is-medium" />
         </a>
-        </div>
+        <AuthControl />
       </div>
     </div>
+  </div>
 </template>
+
+<script>
+import AuthControl from "./components/AuthControl.vue";
+
+export default {
+  components: {
+    AuthControl
+  }
+}
+</script>
